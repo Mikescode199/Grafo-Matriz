@@ -1,27 +1,28 @@
-class Nodo():
+import networkx as nx
+import graphviz
 
-    def __init__(self, vertice : str):
-        self.vertice = vertice
-        self.aristas = []
+# By Mike el depredador
 
-    def agregar_arista(self):
-        numero_vertices = int(input("Número de aristas del Vertice: "))
-        for i in range(numero_vertices):
-            vertice = input("Ingresa vertice: ")
-            self.aristas.append(vertice)
-        
-
-def Grafo():
-    grafo = []
+def Grafo_crear():
+    Grafo = nx.Graph()
     numero_nodos = int(input("Cuantos nodos tenemos: "))
     for n in range(numero_nodos):
         nodo = input("Ingresar nodo: ")
-        nodo_nuevo = Nodo(nodo)
-        nodo_nuevo.agregar_arista()
-        grafo.append(nodo_nuevo.vertice)
-        grafo.append(nodo_nuevo.aristas)
+        Grafo.add_node(nodo)
+        n_aristas = int(input("Ingresar numero de aristas: "))
+        for a in range(n_aristas):
+            arista = input("Ingresa Arista: ")
+            Grafo.add_edge(nodo, arista)    
 
-    for g in grafo:
-        print(g)
+    print(len(Grafo.nodes))
+    print(len(Grafo.edges))
+    print(Grafo.nodes)
+    print(Grafo.edges)
 
-Grafo()
+    f = nx.nx_agraph.to_agraph(Grafo)
+    nombre_grafo = input("Nombre del Grafo: ")
+    f.layout('dot')
+    f.draw(nombre_grafo + ".png") 
+    
+
+Grafo_crear()
